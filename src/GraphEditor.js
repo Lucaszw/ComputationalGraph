@@ -4,7 +4,7 @@ const yo  = require('yo-yo');
 const BaseEditor = require('./BaseEditor.js');
 const DefaultGraph = require('./DefaultGraph.js.txt');
 
-class GraphEditor extends BaseEditor{
+class GraphEditor extends BaseEditor {
   constructor(container, ...args) {
     super(container, ...args);
     const controls = yo`
@@ -16,7 +16,7 @@ class GraphEditor extends BaseEditor{
   }
   rebuildGraph() {
     const text = this.editor.getValue();
-    this.trigger("rebuildGraph", text);
+    this.trigger("rebuild-graph", text);
   }
 };
 

@@ -1,16 +1,14 @@
+const backbone = require('backbone');
 const d3 = require('d3');
 const dagreD3 = require('dagre-D3');
 const yo = require('yo-yo');
+const _ = require('lodash');
 
 class ComputationalGraph {
   constructor(container) {
+    _.extend(this, backbone.Events);
     this.Styles.apply();
     this.container = container;
-  }
-
-  nodeClicked(...args) {
-    console.log("A node was clicked!");
-    console.log(...args);
   }
 
   buildFromText(text) {
@@ -37,8 +35,8 @@ class ComputationalGraph {
       // Attach a click event to each node in the graph
       _.each(g.nodes(), (n) => {
         let node = g.node(n);
-        node.elem.onclick = this.nodeClicked.bind(this);
-      })
+        node.elem.onclick = (...args) => this.trigger("node-clicked", ...[node, ...args]);
+      });
 
       this.g = g;
     };

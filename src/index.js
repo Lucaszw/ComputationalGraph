@@ -33,23 +33,25 @@ const init = (element) => {
       }]
   };
 
+
+  const _this = this; //XXX: myLayout.registerComponent requires localScoped "this"
   var myLayout = new GoldenLayout( config );
-  const _this = this;
+
   myLayout.registerComponent( 'graph', function ( container, componentState ) {
       container.getElement().html('<div></div>');
       let graphElement = container.getElement()[0];
       _this.graph = new ComputationalGraph(graphElement);
+      _this.graph.on("node-clicked", (...args) => {
+        _this.nodeEditor.changeNode(...args);
+      });
   });
 
   myLayout.registerComponent( 'graph-editor', function ( container, componentState ) {
     container.getElement().html(`<div style="${Styles.editor}"></div>`);
     let graphEditorElement = container.getElement()[0];
     _this.graphEditor = new GraphEditor(graphEditorElement);
-    _this.graphEditor.on("rebuildGraph", (...args) => {
+    _this.graphEditor.on("rebuild-graph", (...args) => {
       _this.graph.buildFromText(...args);
-    });
-    _this.graphEditor.on("nodeClicked", (...args) => {
-      _this.nodeEditor.changeNode(...args);
     });
   });
 
