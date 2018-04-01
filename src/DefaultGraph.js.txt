@@ -1,0 +1,38 @@
+// Fill node "A" with the color green
+g.setNode("A", { style: "fill: #afa" });
+
+// Make the label for node "B" bold
+g.setNode("B", { labelStyle: "font-weight: bold" });
+
+// Double the size of the font for node "C"
+g.setNode("C", { labelStyle: "font-size: 2em" });
+
+g.setNode("D", {});
+
+g.setNode("E", {});
+
+g.setEdge("A", "B", {
+  style: "stroke: #f66; stroke-width: 3px; stroke-dasharray: 5, 5;",
+  arrowheadStyle: "fill: #f66"
+});
+
+// Make the label for the edge from "C" to "B" italic and underlined
+g.setEdge("C", "B", {
+  label: "A to C",
+  labelStyle: "font-style: italic; text-decoration: underline;"
+});
+
+// Make the edge between A and D smoother.
+// see available options for lineInterpolate here: https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate
+g.setEdge("A", "D", {
+  label: "line interpolation different",
+  curve: d3.curveBasis
+});
+
+g.setEdge("E", "D", {});
+
+// Make the arrowhead blue
+g.setEdge("A", "E", {
+  label: "Arrowhead class",
+  arrowheadClass: 'arrowhead'
+});
