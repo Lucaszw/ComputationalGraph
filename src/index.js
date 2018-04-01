@@ -59,6 +59,9 @@ const init = (element) => {
     container.getElement().html(`<div style="${Styles.editor}"></div>`);
     let nodeEditorElement = container.getElement()[0];
     _this.nodeEditor = new NodeEditor(nodeEditorElement);
+    _this.nodeEditor.on("execute-node", (...args) => {
+      _this.graph.executeNode(...args);
+    })
   });
 
   myLayout.init();

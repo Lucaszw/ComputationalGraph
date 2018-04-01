@@ -1,4 +1,5 @@
 const BaseEditor = require('./BaseEditor');
+const yo = require('yo-yo');
 const _ = require('lodash');
 
 class NodeEditor extends BaseEditor {
@@ -7,6 +8,11 @@ class NodeEditor extends BaseEditor {
     this.editor.setValue('// Select node to modify its contents');
     this.editor.on("change", this.documentModified.bind(this));
     this.documents = [];
+    const controls = yo`
+      <div style="${this.Styles.controls}">
+        <button onclick=${this.executeNode.bind(this)}>Execute Node</button>
+      </div>`;
+    container.appendChild(controls);
   }
   changeNode(n, ...args) {
     // Unload the prev document
@@ -25,6 +31,10 @@ class NodeEditor extends BaseEditor {
     // Set the editor to be equal to the documents' text contents
     this.editor.setValue(doc.text);
     this.activeDocument = doc;
+  }
+  executeNode(...args) {
+    if (!this.activeDocument) return;
+    this.trigger("execute-node", ...[this.activeDocument, ...args]);
   }
   documentModified(...args) {
     // Update the activeDocument everytime it is modified

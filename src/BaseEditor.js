@@ -5,7 +5,6 @@ const _ = require('lodash');
 
 class BaseEditor {
   constructor(container) {
-    console.log("Hello World!");
     _.extend(this, backbone.Events);
     const editorContainer = yo`<div style="${this.Styles.editor}"></div>`;
     container.appendChild(editorContainer);

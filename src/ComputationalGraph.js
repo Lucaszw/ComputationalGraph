@@ -11,6 +11,17 @@ class ComputationalGraph {
     this.container = container;
   }
 
+  callScript(text, onload) {
+    // Dynamically load text into script element
+    let script;
+    const _onload = (...args) => {
+      onload(...args);
+      document.head.removeChild(script);
+    }
+    script = yo`<script onload=${_onload.bind(this)}>${text}</script>`;
+    document.head.appendChild(script);
+  }
+
   buildFromText(text) {
     this.container.innerHTML = '';
 
@@ -41,10 +52,11 @@ class ComputationalGraph {
       this.g = g;
     };
 
-    // Dynamically load text into script element
-    let script = yo`<script onload=${onload.bind(this)}>${text}</script>`;
+    this.callScript(text, onload);
+  }
 
-    document.head.appendChild(script);
+  executeNode(node, ...args) {
+    this.callScript(node.text, _.noop);
   }
 
   get Styles() {
